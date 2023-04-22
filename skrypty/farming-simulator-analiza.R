@@ -1,6 +1,3 @@
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages("tidyverse")
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
@@ -9,7 +6,7 @@ farmingSimulatorBase <- read.csv(file = './dane/farming-simulator/bazowy.csv',se
 farmingSimulatorDLSSQuality <- read.csv(file = './dane/farming-simulator/dlss-jakosc.csv',sep = ';')
 farmingSimulatorDLSSBalance <- read.csv(file = './dane/farming-simulator/dlss-balans.csv',sep = ';')
 farmingSimulatorDLSSPerformance <- read.csv(file = './dane/farming-simulator/dlss-wydajnosc.csv',sep = ';')
-farmingSimulatorFSRQuality <- read.csv(file = './dane/farming-simulator/fsr-jakosc.csv',sep = ';')
+farmingSimulatorFSRQuality <- read.csv(file = './dane/farming-simulator/fsr-jakosc1.csv',sep = ';')
 farmingSimulatorFSRBalance <- read.csv(file = './dane/farming-simulator/fsr-balans.csv',sep = ';')
 farmingSimulatorFSRPerformance <- read.csv(file = './dane/farming-simulator/fsr-wydajnosc.csv',sep = ';')
 
@@ -61,6 +58,11 @@ ggplot(data = farmingSimulatorCombinedData, aes(x = Second, y = Framerate, color
         axis.text = element_text(size = 12),
   )
 
-ccf_result <- ccf(farmingSimulatorDLSSQuality$Framerate, farmingSimulatorFSRQuality$Framerate)
+ccf_result <- ccf(farmingSimulatorBase$Framerate, farmingSimulatorFSRQuality$Framerate) #-9
+ccf_result <- ccf(farmingSimulatorBase$Framerate, farmingSimulatorFSRPerformance$Framerate) #-3
+ccf_result <- ccf(farmingSimulatorBase$Framerate, farmingSimulatorFSRBalance$Framerate) #-4
+ccf_result <- ccf(farmingSimulatorBase$Framerate, farmingSimulatorDLSSQuality$Framerate) #-4
+ccf_result <- ccf(farmingSimulatorBase$Framerate, farmingSimulatorDLSSPerformance$Framerate) #-16
+ccf_result <- ccf(farmingSimulatorBase$Framerate, farmingSimulatorDLSSBalance$Framerate) #-6
 
 plot(ccf_result, type = 'h')
