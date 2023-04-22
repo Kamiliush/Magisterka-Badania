@@ -8,7 +8,7 @@ library(tidyverse)
 chernobyliteBase <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
 chernobyliteDLSSQuality <- read.csv(file = './dane/chernobylite/dlss-jakosc.csv',sep = ';')
 chernobyliteDLSSBalance <- read.csv(file = './dane/chernobylite/dlss-balans.csv',sep = ';')
-chernobyliteDLSSPerformance <- read.csv(file = './dane/chernobylite/dlss-jakosc.csv',sep = ';')
+chernobyliteDLSSPerformance <- read.csv(file = './dane/chernobylite/dlss-wydajnosc.csv',sep = ';')
 chernobyliteFSRQuality <- read.csv(file = './dane/chernobylite/fsr-jakosc.csv',sep = ';')
 chernobyliteFSRBalance <- read.csv(file = './dane/chernobylite/fsr-balans.csv',sep = ';')
 chernobyliteFSRPerformance <- read.csv(file = './dane/chernobylite/fsr-wydajnosc.csv',sep = ';')
@@ -43,7 +43,7 @@ write.table(combined_data, file = "combined_data.csv", row.names = FALSE, dec = 
 ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
   geom_line() +
   labs(title = "Framerate Comparison",
-       x = "Datetime",
+       x = "Time (s)",
        y = "Framerate") +
   theme_minimal() +
   scale_color_manual(values = c("Base" = "blue", 
@@ -51,8 +51,8 @@ ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
                                 "DLSS Balance" = "green", 
                                 "DLSS Performance" = "purple",
                                 "FSR Quality" = "orange",
-                                "FSR Balance" = "brown",
-                                "FSR Performance" = "pink")) +
+                                "FSR Balance" = "cyan",
+                                "FSR Performance" = "darkgreen")) +
   theme(legend.title = element_blank())
 
 
