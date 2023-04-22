@@ -1,0 +1,7 @@
+cyberpunkBase <- read.csv(file = './dane/cyberpunk/bazowy.csv',sep = ';')
+cyberpunkDLSSQuality <- read.csv(file = './dane/cyberpunk/dlss-jakosc.csv',sep = ';')
+cyberpunkDLSSBalance <- read.csv(file = './dane/cyberpunk/dlss-balans.csv',sep = ';')
+cyberpunkDLSSPerformance <- read.csv(file = './dane/cyberpunk/dlss-wydajnosc.csv',sep = ';')
+cyberpunkFSRQuality <- read.csv(file = './dane/cyberpunk/fsr-jakosc.csv',sep = ';')
+cyberpunkFSRBalance <- read.csv(file = './dane/cyberpunk/fsr-balans.csv',sep = ';')
+cyberpunkFSRPerformance <- read.csv(file = './dane/cyberpunk/fsr-wydajnosc.csv',sep = ';')

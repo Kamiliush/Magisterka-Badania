@@ -1,0 +1,7 @@
+rdrBase <- read.csv(file = './dane/rdr2/base.csv',sep = ';')
+rdrDLSSQuality <- read.csv(file = './dane/rdr2/dlss-jakosc.csv',sep = ';')
+rdrDLSSBalance <- read.csv(file = './dane/rdr2/dlss-balans.csv',sep = ';')
+rdrDLSSPerformance <- read.csv(file = './dane/rdr2/dlss-wydajnosc.csv',sep = ';')
+rdrFSRQuality <- read.csv(file = './dane/rdr2/fsr-jakosc.csv',sep = ';')
+rdrFSRBalance <- read.csv(file = './dane/rdr2/fsr-balans.csv',sep = ';')
+rdrFSRPerformance <- read.csv(file = './dane/rdr2/fsr-wydajnosc.csv',sep = ';')
