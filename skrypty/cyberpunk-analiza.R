@@ -34,6 +34,14 @@ cyberpunkFSRQuality$Dataset <- "FSR Quality"
 cyberpunkFSRBalance$Dataset <- "FSR Balance"
 cyberpunkFSRPerformance$Dataset <- "FSR Performance"
 
+# colnames(cyberpunkBase)
+# colnames(cyberpunkDLSSQuality)
+# colnames(cyberpunkDLSSBalance)
+# colnames(cyberpunkDLSSPerformance)
+# colnames(cyberpunkFSRQuality)
+# colnames(cyberpunkFSRBalance)
+# colnames(cyberpunkFSRPerformance)
+
 combined_data <- rbind(cyberpunkBase, cyberpunkDLSSQuality, cyberpunkDLSSBalance, cyberpunkDLSSPerformance,
                        cyberpunkFSRQuality, cyberpunkFSRBalance, cyberpunkFSRPerformance)
 
