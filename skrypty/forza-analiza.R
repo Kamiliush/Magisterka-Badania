@@ -1,0 +1,7 @@
+forzaBase <- read.csv(file = './dane/forza/base.csv',sep = ';')
+forzaDLSSQuality <- read.csv(file = './dane/forza/dlss-jakosc.csv',sep = ';')
+forzaDLSSBalance <- read.csv(file = './dane/forza/dlss-balans.csv',sep = ';')
+forzaDLSSPerformance <- read.csv(file = './dane/forza/dlss-wydajnosc.csv',sep = ';')
+forzaFSRQuality <- read.csv(file = './dane/forza/fsr-jakosc.csv',sep = ';')
+forzaFSRBalance <- read.csv(file = './dane/forza/fsr-balans.csv',sep = ';')
+forzaFSRPerformance <- read.csv(file = './dane/forza/fsr-wydajnosc.csv',sep = ';')
