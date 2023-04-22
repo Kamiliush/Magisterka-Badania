@@ -13,8 +13,8 @@ cyberpunkFSRQuality <- read.csv(file = './dane/cyberpunk/fsr-jakosc.csv',sep = '
 cyberpunkFSRBalance <- read.csv(file = './dane/cyberpunk/fsr-balans.csv',sep = ';')
 cyberpunkFSRPerformance <- read.csv(file = './dane/cyberpunk/fsr-wydajnosc.csv',sep = ';')
 
-"Datetime GPU.temperature GPU.usage FB.usage Memory.usage Core.clock Power 
-CPU.temperature CPU.usage CPU.clock RAM.usage Framerate Frametime Framerate.Avg"
+# "Datetime GPU.temperature GPU.usage FB.usage Memory.usage Core.clock Power 
+# CPU.temperature CPU.usage CPU.clock RAM.usage Framerate Frametime Framerate.Avg"
 
 cyberpunkBase <- tibble::rowid_to_column(cyberpunkBase, "Second")
 cyberpunkDLSSQuality <- tibble::rowid_to_column(cyberpunkDLSSQuality, "Second")
