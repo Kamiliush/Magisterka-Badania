@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 #library(dplyr)
 #library(ggplot2)
 #library(tidyverse)
 
 forzaBase <- read.csv(file = './dane/forza/base.csv',sep = ';')
+=======
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+
+forzaBase <- read.csv(file = './dane/forza/bazowy.csv',sep = ';')
+>>>>>>> 41beace1299d253c9d3be1a91959bc65861f0a31
 forzaDLSSQuality <- read.csv(file = './dane/forza/dlss-jakosc.csv',sep = ';')
 forzaDLSSBalance <- read.csv(file = './dane/forza/dlss-balans.csv',sep = ';')
 forzaDLSSPerformance <- read.csv(file = './dane/forza/dlss-wydajnosc.csv',sep = ';')
@@ -10,7 +18,10 @@ forzaFSRQuality <- read.csv(file = './dane/forza/fsr-jakosc.csv',sep = ';')
 forzaFSRBalance <- read.csv(file = './dane/forza/fsr-balans.csv',sep = ';')
 forzaFSRPerformance <- read.csv(file = './dane/forza/fsr-wydajnosc.csv',sep = ';')
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 41beace1299d253c9d3be1a91959bc65861f0a31
 forzaBase <- tibble::rowid_to_column(forzaBase, "Second")
 forzaDLSSQuality <- tibble::rowid_to_column(forzaDLSSQuality, "Second")
 forzaDLSSBalance <- tibble::rowid_to_column(forzaDLSSBalance, "Second")
@@ -29,6 +40,7 @@ forzaFSRQuality$Dataset <- "FSR Quality"
 forzaFSRBalance$Dataset <- "FSR Balance"
 forzaFSRPerformance$Dataset <- "FSR Performance"
 
+<<<<<<< HEAD
 # colnames(forzaBase)
 # colnames(forzaDLSSQuality)
 # colnames(forzaDLSSBalance)
@@ -46,6 +58,17 @@ write.table(forza-combined-data, file = "forza-combined-data.csv",
 ggplot(data = forza-combined-data, aes(x = Second, y = Framerate, color = Dataset)) +
   geom_line() +
   labs(title = "Framerate Comparison - Forza Horizon 5",
+=======
+combined_data <- rbind(forzaBase, forzaDLSSQuality, forzaDLSSBalance, forzaDLSSPerformance,
+                       forzaFSRQuality, forzaFSRBalance, forzaFSRPerformance)
+
+# write.csv(combined_data, file = "combined_data.csv", row.names = FALSE, sep = ';')
+write.table(combined_data, file = "forza-combined-data.csv", row.names = FALSE, dec = ".", sep = ";", quote = FALSE)
+
+ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
+  geom_line(linewidth = 0.8) +
+  labs(title = "Framerate Comparison - Chernobylite",
+>>>>>>> 41beace1299d253c9d3be1a91959bc65861f0a31
        x = "Time (s)",
        y = "Framerate") +
   theme_minimal() +
@@ -55,6 +78,7 @@ ggplot(data = forza-combined-data, aes(x = Second, y = Framerate, color = Datase
                                 "DLSS Performance" = "purple",
                                 "FSR Quality" = "orange",
                                 "FSR Balance" = "cyan",
+<<<<<<< HEAD
                                 "FSR Performance" = "darkgreen")) +
   theme(legend.title = element_blank())
 
@@ -62,3 +86,14 @@ ggplot(data = forza-combined-data, aes(x = Second, y = Framerate, color = Datase
 
 ########### Forza dlss jakość do poprawy!
 
+=======
+                                "FSR Performance" = "yellow")) +
+  theme(legend.title = element_blank(),
+        legend.text = element_text(size = 11),
+        plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+  )
+
+
+>>>>>>> 41beace1299d253c9d3be1a91959bc65861f0a31
