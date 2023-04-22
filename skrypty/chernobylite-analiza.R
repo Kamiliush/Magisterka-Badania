@@ -1,0 +1,10 @@
+daneGry <- read.csv(file = 'C:/Users/Kamil/Desktop/chernobylite-bazowy.csv',sep = ';')
+head(daneGry)
+
+chernobyliteBase <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
+chernobyliteDLSSQuality <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
+chernobyliteDLSSBalance <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
+chernobyliteDLSSPerformance <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
+chernobyliteFSRQuality <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
+chernobyliteFSRBalance <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
+chernobyliteFSRPerformance <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
