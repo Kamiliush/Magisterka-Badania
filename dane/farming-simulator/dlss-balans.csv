@@ -1,4 +1,4 @@
-﻿Datetime; GPU temperature     ;GPU usage           ;FB usage            ;Memory usage        ;Core clock          ;Power               ;CPU temperature     ;CPU usage           ;CPU clock           ;RAM usage           ;Framerate           ;Frametime           ;Framerate Avg       
+Datetime; GPU temperature     ;GPU usage           ;FB usage            ;Memory usage        ;Core clock          ;Power               ;CPU temperature     ;CPU usage           ;CPU clock           ;RAM usage           ;Framerate           ;Frametime           ;Framerate Avg       
  24-02-2023 09:58:35;56;75;30;3985.254;1935;142.294;50;26.297;4299.999;7087;60.1;0;42.4
  24-02-2023 09:58:36;56;83;33;3984.754;1935;143.287;50;28.249;4299.999;7088;60.1;0;42.5
  24-02-2023 09:58:37;56;82;31;3984.754;1935;143.895;49;20.075;4299.999;7086;60.1;0;42.5
