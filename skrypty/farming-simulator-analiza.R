@@ -61,6 +61,6 @@ ggplot(data = farmingSimulatorCombinedData, aes(x = Second, y = Framerate, color
         axis.text = element_text(size = 12),
   )
 
-ccf_result <- ccf(farmingSimulatorDLSSQuality$Framerate, farmingSimulatorFSRQualiy$Framerate)
+ccf_result <- ccf(farmingSimulatorDLSSQuality$Framerate, farmingSimulatorFSRQuality$Framerate)
 
 plot(ccf_result, type = 'h')
