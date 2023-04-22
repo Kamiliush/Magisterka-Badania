@@ -60,7 +60,10 @@ ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
                                 "DLSS Performance" = "purple",
                                 "FSR Quality" = "orange",
                                 "FSR Balance" = "cyan",
-                                "FSR Performance" = "darkgreen")) +
-  theme(legend.title = element_blank())
-
-
+                                "FSR Performance" = "yellow")) +
+  theme(legend.title = element_blank(),
+        legend.text = element_text(size = 11),
+        plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+  )

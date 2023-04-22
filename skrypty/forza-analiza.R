@@ -3,7 +3,6 @@ library(ggplot2)
 library(tidyverse)
 
 forzaBase <- read.csv(file = './dane/forza/bazowy.csv',sep = ';')
-
 forzaDLSSQuality <- read.csv(file = './dane/forza/dlss-jakosc.csv',sep = ';')
 forzaDLSSBalance <- read.csv(file = './dane/forza/dlss-balans.csv',sep = ';')
 forzaDLSSPerformance <- read.csv(file = './dane/forza/dlss-wydajnosc.csv',sep = ';')
