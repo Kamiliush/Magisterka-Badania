@@ -1,7 +1,9 @@
 install.packages("dplyr")
 install.packages("ggplot2")
+install.packages("tidyverse")
 library(dplyr)
 library(ggplot2)
+library(tidyverse)
 
 chernobyliteBase <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
 chernobyliteDLSSQuality <- read.csv(file = './dane/chernobylite/dlss-jakosc.csv',sep = ';')
@@ -13,6 +15,15 @@ chernobyliteFSRPerformance <- read.csv(file = './dane/chernobylite/fsr-wydajnosc
 
 "Datetime GPU.temperature GPU.usage FB.usage Memory.usage Core.clock Power 
 CPU.temperature CPU.usage CPU.clock RAM.usage Framerate Frametime Framerate.Avg"
+
+chernobyliteBase <- tibble::rowid_to_column(chernobyliteBase, "Second")
+chernobyliteDLSSQuality <- tibble::rowid_to_column(chernobyliteDLSSQuality, "Second")
+chernobyliteDLSSBalance <- tibble::rowid_to_column(chernobyliteDLSSBalance, "Second")
+chernobyliteDLSSPerformance <- tibble::rowid_to_column(chernobyliteDLSSPerformance, "Second")
+chernobyliteFSRQuality <- tibble::rowid_to_column(chernobyliteFSRQuality, "Second")
+chernobyliteFSRBalance <- tibble::rowid_to_column(chernobyliteFSRBalance, "Second")
+chernobyliteFSRPerformance <- tibble::rowid_to_column(chernobyliteFSRPerformance, "Second")
+
 
 
 chernobyliteBase$Dataset <- "Base"
@@ -29,7 +40,7 @@ combined_data <- rbind(chernobyliteBase, chernobyliteDLSSQuality, chernobyliteDL
 # write.csv(combined_data, file = "combined_data.csv", row.names = FALSE, sep = ';')
 write.table(combined_data, file = "combined_data.csv", row.names = FALSE, dec = ".", sep = ";", quote = FALSE)
 
-ggplot(data = combined_data, aes(x = Datetime, y = Framerate, color = Dataset)) +
+ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
   geom_line() +
   labs(title = "Framerate Comparison",
        x = "Datetime",
