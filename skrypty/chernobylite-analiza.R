@@ -38,11 +38,11 @@ combined_data <- rbind(chernobyliteBase, chernobyliteDLSSQuality, chernobyliteDL
                        chernobyliteFSRQuality, chernobyliteFSRBalance, chernobyliteFSRPerformance)
 
 # write.csv(combined_data, file = "combined_data.csv", row.names = FALSE, sep = ';')
-write.table(combined_data, file = "combined_data.csv", row.names = FALSE, dec = ".", sep = ";", quote = FALSE)
+write.table(combined_data, file = "chernobylite-combined-data.csv", row.names = FALSE, dec = ".", sep = ";", quote = FALSE)
 
 ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
-  geom_line() +
-  labs(title = "Framerate Comparison",
+  geom_line(linewidth = 0.8) +
+  labs(title = "Framerate Comparison - Chernobylite",
        x = "Time (s)",
        y = "Framerate") +
   theme_minimal() +
@@ -52,8 +52,13 @@ ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
                                 "DLSS Performance" = "purple",
                                 "FSR Quality" = "orange",
                                 "FSR Balance" = "cyan",
-                                "FSR Performance" = "darkgreen")) +
-  theme(legend.title = element_blank())
+                                "FSR Performance" = "yellow")) +
+  theme(legend.title = element_blank(),
+        legend.text = element_text(size = 11),
+        plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        )
 
 
 
