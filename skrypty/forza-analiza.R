@@ -38,6 +38,7 @@ forzaFSRPerformance$Dataset <- "FSR Performance"
 
 forza_combined_data <- rbind(forzaBase, forzaDLSSQuality, forzaDLSSBalance, forzaDLSSPerformance, forzaFSRQuality, forzaFSRBalance, forzaFSRPerformance)
 
+
 write.table(forza_combined_data, file = "forza-combined-data.csv", 
             row.names = FALSE, dec = ".", sep = ";", quote = FALSE)
 
