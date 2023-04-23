@@ -67,3 +67,11 @@ ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
   )
+
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkFSRQuality$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkFSRPerformance$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkFSRBalance$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkDLSSQuality$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkDLSSPerformance$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkDLSSBalance$Framerate) #-1
+
