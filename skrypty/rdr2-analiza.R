@@ -55,4 +55,11 @@ ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
         axis.text = element_text(size = 12),
   )
 
+ccf_result <- ccf(rdrDLSSQuality$Framerate, rdrFSRQuality$Framerate) #-1
+ccf_result <- ccf(rdrDLSSQuality$Framerate, rdrFSRPerformance$Framerate) #-2 
+ccf_result <- ccf(rdrDLSSQuality$Framerate, rdrFSRBalance$Framerate) #-error
+ccf_result <- ccf(rdrDLSSQuality$Framerate, rdrBase$Framerate) #-1
+ccf_result <- ccf(rdrDLSSQuality$Framerate, rdrDLSSPerformance$Framerate) #-2
+ccf_result <- ccf(rdrDLSSQuality$Framerate, rdrDLSSBalance$Framerate) #-2
+
 
