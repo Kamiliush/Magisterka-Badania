@@ -1,9 +1,11 @@
 #install.packages("dplyr")
 #install.packages("ggplot2")
 #install.packages("tidyverse")
-#library(dplyr)
-#library(ggplot2)
-#library(tidyverse)
+
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(coin)
 
 cyberpunkBase <- read.csv(file = './dane/cyberpunk/bazowy.csv',sep = ';')
 cyberpunkDLSSQuality <- read.csv(file = './dane/cyberpunk/dlss-jakosc.csv',sep = ';')
@@ -44,6 +46,8 @@ cyberpunkFSRPerformance$Dataset <- "FSR Performance"
 
 combined_data <- rbind(cyberpunkBase, cyberpunkDLSSQuality, cyberpunkDLSSBalance, cyberpunkDLSSPerformance,
                        cyberpunkFSRQuality, cyberpunkFSRBalance, cyberpunkFSRPerformance)
+
+
 
 # write.csv(combined_data, file = "combined_data.csv", row.names = FALSE, sep = ';')
 write.table(combined_data, file = "cyberpunk-combined-data.csv", row.names = FALSE, dec = ".", sep = ";", quote = FALSE)
