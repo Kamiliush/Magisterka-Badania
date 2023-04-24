@@ -1,3 +1,6 @@
+library(dplyr)
+library(tidyverse)
+
 fps_data <- data.frame(
   fps_base = read.csv(file = './dane/cyberpunk/bazowy.csv', sep = ';')$Framerate,
   fps_dlss_quality = read.csv(file = './dane/cyberpunk/dlss-jakosc.csv', sep = ';')$Framerate,
@@ -7,6 +10,63 @@ fps_data <- data.frame(
   fps_fsr_balance = read.csv(file = './dane/cyberpunk/fsr-balans.csv', sep = ';')$Framerate,
   fps_fsr_performance = read.csv(file = './dane/cyberpunk/fsr-wydajnosc.csv', sep = ';')$Framerate
 )
+
+# Analiza skoków FPS
+fps_data_diff <- fps_data %>%
+  mutate(across(starts_with("fps"), list(diff = ~ c(NA, diff(.))))) %>%
+  select(contains("diff"))
+
+fps_data_diff_tidy <- fps_data_diff %>% 
+  mutate(id = row_number()) %>% 
+  gather(key = "setting", value = "fps_diff", -id)
+
+# Wizualizacja skoków FPS
+ggplot(fps_data_diff_tidy, aes(x = id, y = fps_diff, color = setting)) +
+  geom_line() +
+  theme_minimal() +
+  labs(title = "Frame Rate Variability Plot", x = "Time", y = "Variability", color = "Settings")
+
+
+
+fps_data_diff_selected <- fps_data_diff[, c("fps_base_diff", "fps_dlss_quality_diff", "fps_dlss_balance_diff", "fps_dlss_performance_diff", "fps_fsr_quality_diff", "fps_fsr_balance_diff", "fps_fsr_performance_diff")]
+
+correlation_matrix <- cor(fps_data_diff_selected, use = "pairwise.complete.obs")
+print(correlation_matrix)
+
+library(corrplot)
+
+corrplot(correlation_matrix, method = "circle")
+
+
+
+
+
+
+
+ 
+
+# Liczenie spadków poniżej określonego progu (np. 30 FPS)
+fps_threshold <- 30
+fps_below_threshold <- only_fps %>%
+  group_by(setting) %>%
+  summarise(
+    below_threshold = sum(fps < fps_threshold),
+    total_samples = n(),
+    percent_below_threshold = (below_threshold / total_samples) * 100
+  )
+
+print(fps_below_threshold)
+
+
+
+
+
+
+
+
+
+
+
 
 # Funkcja do obliczania 1% low FPS
 fps_base_1_percent_low <- min(fps_data$fps_base[fps_data$fps_base >= quantile(fps_data$fps_base, 0.01)])
@@ -50,36 +110,6 @@ statystyki <- only_fps %>%
   )
 
 print(statystyki)
-
-# Analiza skoków FPS
-fps_data_diff <- fps_data %>%
-  mutate(across(starts_with("fps"), list(diff = ~ c(NA, diff(.))))) %>%
-  select(contains("diff"))
-
-fps_data_diff_tidy <- fps_data_diff %>% 
-  mutate(id = row_number()) %>% 
-  gather(key = "setting", value = "fps_diff", -id)
-
-# Wizualizacja skoków FPS
-ggplot(fps_data_diff_tidy, aes(x = id, y = fps_diff, color = setting)) +
-  geom_line() +
-  theme_minimal() +
-  labs(title = "Skoki FPS w różnych ustawieniach", x = "Czas", y = "Skok FPS", color = "Ustawienie")
-
-# Liczenie spadków poniżej określonego progu (np. 30 FPS)
-fps_threshold <- 30
-fps_below_threshold <- only_fps %>%
-  group_by(setting) %>%
-  summarise(
-    below_threshold = sum(fps < fps_threshold),
-    total_samples = n(),
-    percent_below_threshold = (below_threshold / total_samples) * 100
-  )
-
-print(fps_below_threshold)
-
-
-
 
 
 
