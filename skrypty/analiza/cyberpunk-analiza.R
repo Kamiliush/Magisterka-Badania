@@ -1,9 +1,11 @@
 #install.packages("dplyr")
 #install.packages("ggplot2")
 #install.packages("tidyverse")
-#library(dplyr)
-#library(ggplot2)
-#library(tidyverse)
+
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(coin)
 
 cyberpunkBase <- read.csv(file = './dane/cyberpunk/bazowy.csv',sep = ';')
 cyberpunkDLSSQuality <- read.csv(file = './dane/cyberpunk/dlss-jakosc.csv',sep = ';')
@@ -45,6 +47,8 @@ cyberpunkFSRPerformance$Dataset <- "FSR Performance"
 combined_data <- rbind(cyberpunkBase, cyberpunkDLSSQuality, cyberpunkDLSSBalance, cyberpunkDLSSPerformance,
                        cyberpunkFSRQuality, cyberpunkFSRBalance, cyberpunkFSRPerformance)
 
+
+
 # write.csv(combined_data, file = "combined_data.csv", row.names = FALSE, sep = ';')
 write.table(combined_data, file = "cyberpunk-combined-data.csv", row.names = FALSE, dec = ".", sep = ";", quote = FALSE)
 
@@ -67,3 +71,11 @@ ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
   )
+
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkFSRQuality$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkFSRPerformance$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkFSRBalance$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkDLSSQuality$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkDLSSPerformance$Framerate) #0
+ccf_result <- ccf(cyberpunkBase$Framerate, cyberpunkDLSSBalance$Framerate) #-1
+

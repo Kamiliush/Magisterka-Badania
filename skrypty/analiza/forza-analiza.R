@@ -3,6 +3,7 @@ library(ggplot2)
 library(tidyverse)
 
 forzaBase <- read.csv(file = './dane/forza/bazowy.csv',sep = ';')
+
 forzaDLSSQuality <- read.csv(file = './dane/forza/dlss-jakosc.csv',sep = ';')
 forzaDLSSBalance <- read.csv(file = './dane/forza/dlss-balans.csv',sep = ';')
 forzaDLSSPerformance <- read.csv(file = './dane/forza/dlss-wydajnosc.csv',sep = ';')
@@ -60,6 +61,13 @@ ggplot(data = forza_combined_data, aes(x = Second, y = Framerate, color = Datase
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
   )
+
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaFSRQuality$Framerate) #-4
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaFSRPerformance$Framerate) #-5
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaFSRBalance$Framerate) #-5
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaDLSSQuality$Framerate) #-4
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaBase$Framerate) #-4
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaDLSSBalance$Framerate) #-5
 
 
 

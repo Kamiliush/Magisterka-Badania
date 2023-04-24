@@ -57,5 +57,11 @@ ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
         axis.text = element_text(size = 12),
         )
 
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRQuality$Framerate) #-1
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRPerformance$Framerate) #-2 
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRBalance$Framerate) #-1
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteDLSSQuality$Framerate) #-2
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteDLSSPerformance$Framerate) #-1
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteDLSSBalance$Framerate) #-1
 
 
