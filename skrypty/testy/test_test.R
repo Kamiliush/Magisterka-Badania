@@ -18,13 +18,33 @@ fps_data_diff <- fps_data %>%
 
 fps_data_diff_tidy <- fps_data_diff %>% 
   mutate(id = row_number()) %>% 
-  gather(key = "setting", value = "fps_diff", -id)
+  pivot_longer(cols = -id, names_to = "setting", values_to = "fps_diff")
 
 # Wizualizacja skoków FPS
+new_legend_labels <- c(
+  "Base FPS",
+  "DLSS Quality",
+  "DLSS Balance",
+  "DLSS Performance",
+  "FSR Quality",
+  "FSR Balance",
+  "FSR Performance"
+)
+
 ggplot(fps_data_diff_tidy, aes(x = id, y = fps_diff, color = setting)) +
   geom_line() +
   theme_minimal() +
-  labs(title = "Frame Rate Variability Plot", x = "Time", y = "Variability", color = "Settings")
+  labs(title = "Frame Rate Variability Plot (Chernobylite)", x = "Time", y = "Variability", color = "Settings") +
+  scale_color_discrete(labels = new_legend_labels) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_x_continuous(breaks = seq(0, 80, by = 1), 
+                     labels = ifelse(seq(0, 80, by = 1) %% 10 == 0, seq(0, 80, by = 1), ""),
+                     limits = c(0, 80)) +
+  scale_y_continuous(breaks = seq(floor(min(fps_data_diff_tidy$fps_diff, na.rm = TRUE)), ceiling(max(fps_data_diff_tidy$fps_diff, na.rm = TRUE)), by = 1),
+                     labels = ifelse(seq(floor(min(fps_data_diff_tidy$fps_diff, na.rm = TRUE)), ceiling(max(fps_data_diff_tidy$fps_diff, na.rm = TRUE)), by = 1) %% 10 == 0, seq(floor(min(fps_data_diff_tidy$fps_diff, na.rm = TRUE)), ceiling(max(fps_data_diff_tidy$fps_diff, na.rm = TRUE)), by = 1), ""))
+
+
+
 
 
 
