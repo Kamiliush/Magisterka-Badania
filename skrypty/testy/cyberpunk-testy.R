@@ -22,9 +22,30 @@ colnames(test_results) <- c("Próba", "Spełnienie założeń hipotez")
 # Wyświetlenie wyników testu
 test_results
 
-psych::describe(fps_data$fps_dlss_quality)
-psych::describe(fps_data$fps_fsr_quality)
-psych::describe(fps_data$fps_dlss_balance)
-psych::describe(fps_data$fps_fsr_balance)
-psych::describe(fps_data$fps_dlss_performance)
-psych::describe(fps_data$fps_fsr_performance)
+# Nowa ramka danych dla wyników porównania FSR i DLSS
+comparison_results <- data.frame(matrix(nrow = 3, ncol = 2))
+
+# Testy Wilcoxona dla par prób FSR i DLSS
+for (i in seq(2, 6, by = 2)) {
+  fsr_sample <- fps_data[, i + 1]
+  dlss_sample <- fps_data[, i]
+  
+  test_result <- wilcox.test(fsr_sample, dlss_sample, paired = TRUE, alternative = "two.sided")
+  comparison_results[(i / 2), 1] <- paste(names(fps_data)[i + 1], "vs", names(fps_data)[i])
+  
+  if (test_result$p.value < 0.05) {
+    if (mean(fsr_sample) > mean(dlss_sample)) {
+      comparison_results[(i / 2), 2] <- "FSR ma większy przebieg"
+    } else {
+      comparison_results[(i / 2), 2] <- "DLSS ma większy przebieg"
+    }
+  } else {
+    comparison_results[(i / 2), 2] <- "Brak istotnych różnic"
+  }
+}
+
+# Dodanie nazw prób do wyników porównania
+colnames(comparison_results) <- c("Porównanie", "Wynik")
+
+# Wyświetlenie wyników porównania
+comparison_results
