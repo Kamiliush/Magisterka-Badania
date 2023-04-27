@@ -23,6 +23,16 @@ colnames(test_results) <- c("Proba", "P-value")
 test_results
 
 
+psych::describe(fps_data$fps_base)
+psych::describe(fps_data$fps_dlss_quality)
+psych::describe(fps_data$fps_fsr_quality)
+psych::describe(fps_data$fps_dlss_balance)
+psych::describe(fps_data$fps_fsr_balance)
+psych::describe(fps_data$fps_dlss_performance)
+psych::describe(fps_data$fps_fsr_performance)
+
+
+
 colnames(fps_data) <- c(
   "Base",
   "DLSS Quality",

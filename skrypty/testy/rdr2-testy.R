@@ -16,7 +16,7 @@ for(i in 2:ncol(fps_data)){
   test_results[i-1,1] <- names(fps_data)[i]
   test_results[i-1,2] <- test_result$p.value
 }
-
+psych::describe(fps_data$fps_base)
 psych::describe(fps_data$fps_dlss_quality)
 psych::describe(fps_data$fps_fsr_quality)
 psych::describe(fps_data$fps_dlss_balance)

@@ -17,6 +17,7 @@ for(i in 2:ncol(fps_data)){
 }
 
 
+psych::describe(fps_data$fps_base)
 psych::describe(fps_data$fps_dlss_quality)
 psych::describe(fps_data$fps_fsr_quality)
 psych::describe(fps_data$fps_dlss_balance)
