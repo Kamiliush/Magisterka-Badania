@@ -1,6 +1,8 @@
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
+library(Cairo)
+CairoWin()
 
 chernobyliteBase <- read.csv(file = './dane/chernobylite/bazowy.csv',sep = ';')
 chernobyliteDLSSQuality <- read.csv(file = './dane/chernobylite/dlss-jakosc.csv',sep = ';')
@@ -23,13 +25,13 @@ chernobyliteFSRPerformance <- tibble::rowid_to_column(chernobyliteFSRPerformance
 
 
 
-chernobyliteBase$Dataset <- "Base"
-chernobyliteDLSSQuality$Dataset <- "DLSS Quality"
-chernobyliteDLSSBalance$Dataset <- "DLSS Balance"
-chernobyliteDLSSPerformance$Dataset <- "DLSS Performance"
-chernobyliteFSRQuality$Dataset <- "FSR Quality"
-chernobyliteFSRBalance$Dataset <- "FSR Balance"
-chernobyliteFSRPerformance$Dataset <- "FSR Performance"
+chernobyliteBase$Dataset <- "Bazowy"
+chernobyliteDLSSQuality$Dataset <- "DLSS Jakość"
+chernobyliteDLSSBalance$Dataset <- "DLSS Balans"
+chernobyliteDLSSPerformance$Dataset <- "DLSS Wydajność"
+chernobyliteFSRQuality$Dataset <- "FSR Jakość"
+chernobyliteFSRBalance$Dataset <- "FSR Balans"
+chernobyliteFSRPerformance$Dataset <- "FSR Wydajność"
 
 combined_data <- rbind(chernobyliteBase, chernobyliteDLSSQuality, chernobyliteDLSSBalance, chernobyliteDLSSPerformance,
                        chernobyliteFSRQuality, chernobyliteFSRBalance, chernobyliteFSRPerformance)
@@ -37,25 +39,28 @@ combined_data <- rbind(chernobyliteBase, chernobyliteDLSSQuality, chernobyliteDL
 # write.csv(combined_data, file = "combined_data.csv", row.names = FALSE, sep = ';')
 write.table(combined_data, file = "chernobylite-combined-data.csv", row.names = FALSE, dec = ".", sep = ";", quote = FALSE)
 
-ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
-  geom_line(linewidth = 0.8) +
-  labs(title = "Framerate Comparison - Chernobylite",
-       x = "Time (s)",
-       y = "Framerate") +
+g <- ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
+  geom_line(linewidth = 0.2) +
+  labs(title = "Porównanie liczby klatek na sekundę - Chernobylite",
+       x = "Czas (s)",
+       y = "Klatki na sekundę") +
   theme_minimal() +
-  scale_color_manual(values = c("Base" = "blue", 
-                                "DLSS Quality" = "red", 
-                                "DLSS Balance" = "green", 
-                                "DLSS Performance" = "purple",
-                                "FSR Quality" = "orange",
-                                "FSR Balance" = "cyan",
-                                "FSR Performance" = "yellow")) +
+  scale_color_manual(values = c("Bazowy" = "blue", 
+                                "DLSS Jakość" = "red", 
+                                "DLSS Balans" = "green", 
+                                "DLSS Wydajność" = "purple",
+                                "FSR Jakość" = "orange",
+                                "FSR Balans" = "cyan",
+                                "FSR Wydajność" = "yellow")) +
   theme(legend.title = element_blank(),
         legend.text = element_text(size = 11),
         plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         )
+
+ggsave(g, filename = 'nhtemp_with_cairo.png', dpi = 300, type = 'cairo',
+       width = 8, height = 4, units = 'in', bg = 'white')
 
 ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRQuality$Framerate) #-1
 ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRPerformance$Framerate) #-2 
