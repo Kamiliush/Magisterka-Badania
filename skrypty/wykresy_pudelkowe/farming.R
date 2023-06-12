@@ -46,3 +46,4 @@ scale_fill_manual(values = c("Base" = "darkgoldenrod1",
                              "FSR_Quality" = "chartreuse4",
                              "FSR_Balance" = "deepskyblue4",
                              "FSR_Performance" = "darkorchid4"))
+
