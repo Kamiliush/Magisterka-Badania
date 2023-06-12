@@ -1,6 +1,8 @@
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
+library(Cairo)
+CairoWin()
 
 forzaBase <- read.csv(file = './dane/forza/bazowy.csv',sep = ';')
 
@@ -19,13 +21,13 @@ forzaFSRQuality <- tibble::rowid_to_column(forzaFSRQuality, "Second")
 forzaFSRBalance <- tibble::rowid_to_column(forzaFSRBalance, "Second")
 forzaFSRPerformance <- tibble::rowid_to_column(forzaFSRPerformance, "Second")
 
-forzaBase$Dataset <- "Base"
-forzaDLSSQuality$Dataset <- "DLSS Quality"
-forzaDLSSBalance$Dataset <- "DLSS Balance"
-forzaDLSSPerformance$Dataset <- "DLSS Performance"
-forzaFSRQuality$Dataset <- "FSR Quality"
-forzaFSRBalance$Dataset <- "FSR Balance"
-forzaFSRPerformance$Dataset <- "FSR Performance"
+forzaBase$Dataset <- "Bazowy"
+forzaDLSSQuality$Dataset <- "DLSS Jakość"
+forzaDLSSBalance$Dataset <- "DLSS Balans"
+forzaDLSSPerformance$Dataset <- "DLSS Wydajność"
+forzaFSRQuality$Dataset <- "FSR Jakość"
+forzaFSRBalance$Dataset <- "FSR Balans"
+forzaFSRPerformance$Dataset <- "FSR Wydajność"
 
 
 # colnames(forzaBase)
@@ -42,25 +44,30 @@ forza_combined_data <- rbind(forzaBase, forzaDLSSQuality, forzaDLSSBalance, forz
 write.table(forza_combined_data, file = "forza-combined-data.csv", 
             row.names = FALSE, dec = ".", sep = ";", quote = FALSE)
 
-ggplot(data = forza_combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
-  geom_line(linewidth = 0.8) +
-  labs(title = "Framerate Comparison - Forza Horizon 5",
-       x = "Time (s)",
-       y = "Framerate") +
+g <- ggplot(data = forza_combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
+  geom_line(linewidth = 0.2) +
+  labs(title = "Porównanie liczby klatek na sekundę - Forza",
+       x = "Czas (s)",
+       y = "Klatki na sekundę") +
   theme_minimal() +
-  scale_color_manual(values = c("Base" = "blue", 
-                                "DLSS Quality" = "red", 
-                                "DLSS Balance" = "green", 
-                                "DLSS Performance" = "purple",
-                                "FSR Quality" = "orange",
-                                "FSR Balance" = "cyan",
-                                "FSR Performance" = "yellow")) +
+  scale_color_manual(values = c("Bazowy" = "blue", 
+                                "DLSS Jakość" = "red", 
+                                "DLSS Balans" = "green", 
+                                "DLSS Wydajność" = "purple",
+                                "FSR Jakość" = "orange",
+                                "FSR Balans" = "cyan",
+                                "FSR Wydajność" = "yellow")) +
+  scale_x_continuous(breaks = seq(0, 250, 10)) + # skalowanie osi x od 0 do 250 co 50
   theme(legend.title = element_blank(),
-        legend.text = element_text(size = 11),
+        legend.text = element_text(size = 8), #zmniejsza czcionkę w legendzie
         plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
-  )
+        legend.position="bottom") # przenosi legendę na dół
+
+ggsave(g, filename = './eksporty/FPS/forza.png', dpi = 300, type = 'cairo',
+       width = 8, height = 4, units = 'in', bg = 'white')
+
 
 ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaFSRQuality$Framerate) #-4
 ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaFSRPerformance$Framerate) #-5
@@ -68,6 +75,54 @@ ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaFSRBalance$Framerate) #-5
 ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaDLSSQuality$Framerate) #-4
 ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaBase$Framerate) #-4
 ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaDLSSBalance$Framerate) #-5
+
+
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaFSRQuality$Framerate, plot = FALSE)
+p <- autoplot(ccf_result, 
+              main = "Korelacja krzyżowa pomiędzy DLSS Wydajność a FSR Jakość",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/forza_dlss_performance_fsr_quality.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaFSRPerformance$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy DLSS Wydajność a FSR Wydajność",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/forza_dlss_performance_fsr_performance.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaFSRBalance$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy DLSS Wydajność a FSR Balans",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/forza_dlss_performance_fsr_balance.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaDLSSQuality$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy DLSS Wydajność a DLSS Jakość",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/forza_dlss_performance_dlss_quality.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaBase$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy DLSS Wydajność a Bazowy",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/forza_dlss_performance_base.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(forzaDLSSPerformance$Framerate, forzaDLSSBalance$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy DLSS Wydajność a DLSS Balans",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/forza_dlss_performance_dlss_balance.png', p, width = 10, height = 6, dpi = 300)
 
 
 

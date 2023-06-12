@@ -52,14 +52,15 @@ g <- ggplot(data = combined_data, aes(x = Second, y = Framerate, color = Dataset
                                 "FSR Jakość" = "orange",
                                 "FSR Balans" = "cyan",
                                 "FSR Wydajność" = "yellow")) +
+  scale_x_continuous(breaks = seq(0, 250, 25)) + # skalowanie osi x od 0 do 250 co 50
   theme(legend.title = element_blank(),
-        legend.text = element_text(size = 11),
+        legend.text = element_text(size = 8), #zmniejsza czcionkę w legendzie
         plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
-        )
+        legend.position="bottom") # przenosi legendę na dół
 
-ggsave(g, filename = 'nhtemp_with_cairo.png', dpi = 300, type = 'cairo',
+ggsave(g, filename = './eksporty/FPS/chernobylite.png', dpi = 300, type = 'cairo',
        width = 8, height = 4, units = 'in', bg = 'white')
 
 ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRQuality$Framerate) #-1
@@ -68,5 +69,53 @@ ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRBalance$Framerate) 
 ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteDLSSQuality$Framerate) #-2
 ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteDLSSPerformance$Framerate) #-1
 ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteDLSSBalance$Framerate) #-1
+
+
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRQuality$Framerate, plot = FALSE)
+p <- autoplot(ccf_result, 
+              main = "Korelacja krzyżowa pomiędzy Bazowy a FSR Jakość",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/chernobylite_base_fsr_quality.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRPerformance$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy Bazowy a FSR Wydajność",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/chernobylite_base_fsr_performance.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteFSRBalance$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy Bazowy a FSR Balans",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/chernobylite_base_fsr_balance.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteDLSSQuality$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy Bazowy a DLSS Jakość",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/chernobylite_base_dlss_quality.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteDLSSPerformance$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy Bazowy a DLSS Wydajność",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/chernobylite_base_dlss_performance.png', p, width = 10, height = 6, dpi = 300)
+
+
+ccf_result <- ccf(chernobyliteBase$Framerate, chernobyliteDLSSBalance$Framerate, plot = FALSE)
+p <- autoplot(ccf_result,
+              main = "Korelacja krzyżowa pomiędzy Bazowy a DLSS Balans",
+              ylab = "Korelacja krzyżowa",
+              xlab = "Opóźnienie")
+ggsave('./eksporty/ccf/chernobylite_base_dlss_balance.png', p, width = 10, height = 6, dpi = 300)
 
 
