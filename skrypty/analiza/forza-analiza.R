@@ -46,7 +46,7 @@ write.table(forza_combined_data, file = "forza-combined-data.csv",
 
 g <- ggplot(data = forza_combined_data, aes(x = Second, y = Framerate, color = Dataset)) +
   geom_line(linewidth = 0.2) +
-  labs(title = "Porównanie liczby klatek na sekundę - Forza",
+  labs(title = "Porównanie liczby klatek na sekundę - Forza Horzion 5",
        x = "Czas (s)",
        y = "Klatki na sekundę") +
   theme_minimal() +
