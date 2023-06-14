@@ -29,7 +29,7 @@ ggplot(fps_data_long, aes(x = Technology, y = Framerate, fill = Technology)) +
   labs(x = "Upscaling technology", y = "Framerate (FPS)", title = "Averages and Distributions\nof Frame Rates for Different Technologies") +
   theme_bw() +
   theme(legend.position = "bottom",
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1),
         plot.title = element_text(hjust = 0.5)) +
   scale_x_discrete(labels = c("Base" = "Base",
                               "DLSS_Quality" = "DLSS Quality",
@@ -38,4 +38,12 @@ ggplot(fps_data_long, aes(x = Technology, y = Framerate, fill = Technology)) +
                               "FSR_Balance" = "FSR Balance",
                               "DLSS_Performance" = "DLSS Performance",
                               "FSR_Performance" = "FSR Performance"),
-                   limits = c("Base", "DLSS_Quality", "FSR_Quality", "DLSS_Balance", "FSR_Balance", "DLSS_Performance", "FSR_Performance"))
+                   limits = c("Base", "DLSS_Quality", "FSR_Quality", "DLSS_Balance", "FSR_Balance", "DLSS_Performance", "FSR_Performance")) + 
+scale_fill_manual(values = c("Base" = "darkgoldenrod1",
+                             "DLSS_Quality" = "chartreuse",
+                             "DLSS_Balance" = "deepskyblue",
+                             "DLSS_Performance" = "darkorchid1",
+                             "FSR_Quality" = "chartreuse4",
+                             "FSR_Balance" = "deepskyblue4",
+                             "FSR_Performance" = "darkorchid4"))
+
